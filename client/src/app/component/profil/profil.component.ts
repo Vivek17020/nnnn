@@ -8,5 +8,5 @@ import { HttpService } from '../../../services/http.service';
 })
 export class ProfilComponent  {
   
-  //write required code here!
+    
 }
