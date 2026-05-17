@@ -1,33 +1,197 @@
-// App shell — navbar brand polish + layout wrapper
-// Global nav styles live in styles.scss; this adds brand-specific details
-
-:host {
-  display: block;
+.ba-navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10, 22, 40, 1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
 }
 
-// Brand icon glyph
-.navbar-brand {
-  position: relative;
-  padding-left: 0.25rem;
-
-  // Gold underline on hover
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--ai-gold), transparent);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  &:hover::after { opacity: 1; }
-}
-
-// Gold separator between nav links and logout
-.navbar-nav {
+.ba-navbar-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 68px;
+  display: flex;
   align-items: center;
-  gap: 0.125rem;
+  gap: 1rem;
+}
+
+.ba-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  &:hover .ba-brand-icon { transform: rotate(-20deg) scale(1.1); }
+  &:hover { text-decoration: none; }
+}
+.ba-brand-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #c9a227, #f0d070);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #0a1628;
+  font-size: 1.1rem;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(201,162,39,0.35);
+}
+.ba-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.ba-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+.ba-brand-tagline {
+  font-size: 0.62rem;
+  color: #c9a227;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.ba-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px; height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  span {
+    display: block;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+}
+
+
+// Mobile: let Bootstrap collapse handle show/hide
+.ba-nav-collapse {
+  margin-left: auto;
+}
+
+// Desktop: always visible, override Bootstrap's display:none
+@media (min-width: 992px) {
+  .ba-nav-collapse {
+    display: flex !important;
+    align-items: center;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+.ba-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.ba-nav-item { display: flex; align-items: center; }
+
+.ba-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  i { font-size: 0.8rem; }
+  &:hover { background: rgba(255,255,255,0.1); color: #fff; text-decoration: none; }
+  &.active { background: rgba(201,162,39,0.18); color: #c9a227; }
+}
+
+.ba-nav-user { margin-left: 0.5rem; }
+.ba-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px;
+  padding: 0.28rem 0.7rem 0.28rem 0.32rem;
+}
+.ba-user-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c9a227, #f0d070);
+  color: #0a1628;
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ba-user-name { color: #fff; font-size: 0.82rem; font-weight: 600; }
+.ba-user-role {
+  color: rgba(201,162,39,0.9);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  background: rgba(201,162,39,0.15);
+  padding: 0.08rem 0.4rem;
+  border-radius: 50px;
+}
+
+.ba-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(192,57,43,0.15);
+  border: 1px solid rgba(192,57,43,0.3);
+  color: #ff8070;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  i { font-size: 0.8rem; }
+  &:hover { background: rgba(192,57,43,0.32); color: #fff; }
+}
+
+.ba-main { padding-top: 68px; min-height: 100vh; }
+
+@media (max-width: 991px) {
+  .ba-nav-toggle { display: flex; }
+  .ba-nav-collapse {
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(8, 18, 34, 0.99);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(201,162,39,0.15);
+    padding: 0.75rem 1rem 1.25rem;
+    margin-left: 0;
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
+    &:not(.show) { display: none; }
+    &.show { display: block; }
+  }
+  .ba-nav-list { flex-direction: column; align-items: stretch; gap: 0.2rem; }
+  .ba-nav-link { padding: 0.7rem 1rem; font-size: 0.93rem; }
+  .ba-nav-user { margin: 0.4rem 0; }
+  .ba-user-chip { border-radius: 10px; padding: 0.5rem 0.85rem; }
+  .ba-logout-btn { justify-content: center; padding: 0.7rem 1rem; }
 }

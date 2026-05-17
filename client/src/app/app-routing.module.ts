@@ -46,8 +46,10 @@ import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { LandingComponent } from './component/landing/landing.component';
 
 const routes: Routes = [
+  {path: '', component: LandingComponent, pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -59,7 +61,7 @@ const routes: Routes = [
   { path: 'search_flight', component: FlightSearchComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['PASSENGER'] } },
   { path: 'my_booking', component: BookingsComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['PASSENGER'] } },
   { path: 'my_profile', component: ProfilComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({

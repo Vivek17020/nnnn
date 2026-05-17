@@ -1,70 +1,106 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-  <a class="navbar-brand" routerLink="/dashboard">
-    ✈ Airline Booking System
-  </a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav ms-auto align-items-center">
+<nav class="ba-navbar">
+  <div class="ba-navbar-inner">
 
-      <!-- Admin links -->
-      <ng-container *ngIf="isLoggedIn && role === 'ADMIN'">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/add_flights">Add Flights</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/view_all_user">View All Bookings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/assign_pilot">Assign Pilots</a>
-        </li>
-        <!-- BUG FIX: Admin had no My Profile link anywhere -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my_profile">My Profile</a>
-        </li>
-      </ng-container>
+    <a class="ba-brand" routerLink="/">
+      <div class="ba-brand-icon">
+        <i class="fa-solid fa-plane"></i>
+      </div>
+      <div class="ba-brand-text">
+        <span class="ba-brand-name">Bharat Airlines</span>
+        <span class="ba-brand-tagline">Fly with Pride</span>
+      </div>
+    </a>
 
-      <!-- Passenger links -->
-      <ng-container *ngIf="isLoggedIn && role === 'PASSENGER'">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/search_flight">Search Flights</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my_booking">My Bookings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my_profile">My Profile</a>
-        </li>
-      </ng-container>
+    <button class="ba-nav-toggle" id="navToggle" data-bs-toggle="collapse" data-bs-target="#baNavMenu"
+      aria-controls="baNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
 
-      <!-- Pilot links -->
-      <ng-container *ngIf="isLoggedIn && role === 'PILOT'">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/assign_pilot">My Schedule</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my_profile">My Profile</a>
-        </li>
-      </ng-container>
+    <div class="collapse ba-nav-collapse" id="baNavMenu">
+      <ul class="ba-nav-list">
 
-      <!-- Not logged in -->
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
+        <ng-container *ngIf="isLoggedIn && role === 'ADMIN'">
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/add_flights" routerLinkActive="active">
+              <i class="fa-solid fa-plane-circle-plus"></i> Manage Flights
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/view_all_user" routerLinkActive="active">
+              <i class="fa-solid fa-ticket"></i> All Bookings
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/assign_pilot" routerLinkActive="active">
+              <i class="fa-solid fa-user-pilot"></i> Assign Pilots
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/my_profile" routerLinkActive="active">
+              <i class="fa-solid fa-circle-user"></i> My Profile
+            </a>
+          </li>
+        </ng-container>
 
-      <!-- Username display + Logout -->
-      <ng-container *ngIf="isLoggedIn">
-        <!-- BUG FIX: Shows who is logged in in the navbar -->
-        <li class="nav-item">
-          <span class="nav-link text-light opacity-75">👤 {{ username }}</span>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-outline-light btn-sm ms-1" (click)="logout()">Logout</button>
-        </li>
-      </ng-container>
+        <ng-container *ngIf="isLoggedIn && role === 'PASSENGER'">
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/search_flight" routerLinkActive="active">
+              <i class="fa-solid fa-magnifying-glass"></i> Search Flights
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/my_booking" routerLinkActive="active">
+              <i class="fa-solid fa-suitcase"></i> My Bookings
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/my_profile" routerLinkActive="active">
+              <i class="fa-solid fa-circle-user"></i> My Profile
+            </a>
+          </li>
+        </ng-container>
 
-    </ul>
+        <ng-container *ngIf="isLoggedIn && role === 'PILOT'">
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/assign_pilot" routerLinkActive="active">
+              <i class="fa-solid fa-calendar-days"></i> My Schedule
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" routerLink="/my_profile" routerLinkActive="active">
+              <i class="fa-solid fa-circle-user"></i> My Profile
+            </a>
+          </li>
+        </ng-container>
+
+        <li class="ba-nav-item" *ngIf="!isLoggedIn">
+          <a class="ba-nav-link" routerLink="/login">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </a>
+        </li>
+
+        <ng-container *ngIf="isLoggedIn">
+          <li class="ba-nav-item ba-nav-user">
+            <div class="ba-user-chip">
+              <div class="ba-user-avatar">{{ username ? username.charAt(0).toUpperCase() : '?' }}</div>
+              <span class="ba-user-name">{{ username }}</span>
+              <span class="ba-user-role">{{ role }}</span>
+            </div>
+          </li>
+          <li class="ba-nav-item">
+            <button class="ba-logout-btn" (click)="logout()">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Logout</span>
+            </button>
+          </li>
+        </ng-container>
+
+      </ul>
+    </div>
+
   </div>
 </nav>
 
-<div class="container mt-4">
+<main class="ba-main">
   <router-outlet></router-outlet>
-</div>
+</main>
