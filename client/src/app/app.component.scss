@@ -122,6 +122,21 @@
   &.active { background: rgba(201,162,39,0.18); color: #c9a227; }
 }
 
+.ba-nav-link--register {
+  background: rgba(201,162,39,0.15);
+  border: 1px solid rgba(201,162,39,0.35);
+  color: #c9a227;
+  &:hover { background: rgba(201,162,39,0.28); color: #f0d070; }
+}
+
+.ba-nav-link--login {
+  background: #E8601A;
+  color: #fff !important;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  &:hover { background: #c74e13; color: #fff; }
+}
+
 .ba-nav-user { margin-left: 0.5rem; }
 .ba-user-chip {
   display: flex;

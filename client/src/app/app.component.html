@@ -73,11 +73,33 @@
           </li>
         </ng-container>
 
-        <li class="ba-nav-item" *ngIf="!isLoggedIn">
-          <a class="ba-nav-link" routerLink="/login">
-            <i class="fa-solid fa-right-to-bracket"></i> Login
-          </a>
-        </li>
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" href="#home" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+              <i class="fa-solid fa-house"></i> Home
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" href="#about">
+              <i class="fa-solid fa-circle-info"></i> About Us
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link" href="#contact">
+              <i class="fa-solid fa-envelope"></i> Contact
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link ba-nav-link--register" routerLink="/register">
+              <i class="fa-solid fa-user-plus"></i> Register
+            </a>
+          </li>
+          <li class="ba-nav-item">
+            <a class="ba-nav-link ba-nav-link--login" routerLink="/login">
+              <i class="fa-solid fa-right-to-bracket"></i> Login
+            </a>
+          </li>
+        </ng-container>
 
         <ng-container *ngIf="isLoggedIn">
           <li class="ba-nav-item ba-nav-user">

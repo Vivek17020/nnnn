@@ -24,37 +24,164 @@
     <div class="lp-horizon"></div>
   </div>
 
-  <div class="lp-hero-content">
-    <div class="lp-hero-badge">
-      <i class="fa-solid fa-certificate"></i> India's Heritage Airline · Est. 2012
+  <div class="lp-hero-inner lp-container">
+    <!-- Left: copy -->
+    <div class="lp-hero-left">
+      <div class="lp-hero-badge">
+        <span class="lp-badge-dot"></span> India's Global Airline · 35+ Countries
+      </div>
+      <h1 class="lp-hero-title">
+        Fly the<br>
+        <span class="lp-hero-accent-italic">Spirit of</span><br>
+        Bharat
+      </h1>
+      <p class="lp-hero-hindi">आसमान में भारत की शान</p>
+      <p class="lp-hero-sub">
+        From Delhi to Dubai, Mumbai to Manchester, Bengaluru to Bangkok —
+        discover the world with the warmth and hospitality that only
+        Bharat Airlines brings.
+      </p>
+      <div class="lp-hero-stats">
+        <div class="lp-hero-stat">
+          <strong>180+</strong>
+          <span>Destinations</span>
+        </div>
+        <div class="lp-hero-stat-divider"></div>
+        <div class="lp-hero-stat">
+          <strong>35+</strong>
+          <span>Countries</span>
+        </div>
+        <div class="lp-hero-stat-divider"></div>
+        <div class="lp-hero-stat">
+          <strong>98.2%</strong>
+          <span>On-Time Rate</span>
+        </div>
+      </div>
     </div>
-    <h1 class="lp-hero-title">
-      Experience India<br>
-      <span class="lp-hero-accent">Like Never Before</span>
-    </h1>
-    <p class="lp-hero-sub">
-      Bharat Airlines brings you a world of premium comfort, warm hospitality and
-      seamless connectivity — from the peaks of Kashmir to the shores of Kanyakumari.
-    </p>
-    <div class="lp-hero-cta">
-      <a routerLink="/register" class="lp-btn lp-btn-primary">
-        <i class="fa-solid fa-plane-departure"></i> Register Now
-      </a>
-      <a routerLink="/login" class="lp-btn lp-btn-outline">
-        <i class="fa-solid fa-right-to-bracket"></i> Sign In
-      </a>
-    </div>
-    <div class="lp-hero-trust">
-      <span><i class="fa-solid fa-shield-halved"></i> Secure Booking</span>
-      <span><i class="fa-solid fa-headset"></i> 24/7 Support</span>
-      <span><i class="fa-solid fa-tag"></i> Best Fare Guarantee</span>
-    </div>
-  </div>
 
-  <div class="lp-scroll-hint">
-    <i class="fa-solid fa-chevron-down"></i>
+    <!-- Right: animated globe visual -->
+    <div class="lp-hero-visual">
+
+      <!-- Background glow -->
+      <div class="lp-vis-glow"></div>
+
+      <!-- Decorative orbital rings -->
+      <div class="lp-vis-orbit lp-orbit-a"></div>
+      <div class="lp-vis-orbit lp-orbit-b"></div>
+      <div class="lp-vis-orbit lp-orbit-c"></div>
+
+      <!-- Orbiting airplane -->
+      <div class="lp-vis-plane-orbit">
+        <div class="lp-vis-plane-dot">
+          <i class="fa-solid fa-plane"></i>
+        </div>
+      </div>
+
+      <!-- Globe sphere -->
+      <div class="lp-vis-globe">
+        <div class="lp-vis-globe-lat lp-lat-1"></div>
+        <div class="lp-vis-globe-lat lp-lat-2"></div>
+        <div class="lp-vis-globe-lon lp-lon-1"></div>
+        <div class="lp-vis-globe-lon lp-lon-2"></div>
+        <i class="fa-solid fa-globe lp-vis-globe-icon"></i>
+      </div>
+
+      <!-- Pulsing city nodes -->
+      <div class="lp-vis-city" style="top:13%;left:60%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">CDG</div>
+      </div>
+      <div class="lp-vis-city" style="top:28%;left:80%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">DXB</div>
+      </div>
+      <div class="lp-vis-city" style="top:63%;left:80%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">SIN</div>
+      </div>
+      <div class="lp-vis-city" style="top:76%;left:44%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">SYD</div>
+      </div>
+      <div class="lp-vis-city" style="top:18%;left:20%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">LHR</div>
+      </div>
+      <div class="lp-vis-city" style="top:67%;left:16%">
+        <div class="lp-vis-city-ring"></div>
+        <div class="lp-vis-city-dot"></div>
+        <div class="lp-vis-city-label">JFK</div>
+      </div>
+
+      <!-- Floating destination price badges -->
+      <div class="lp-vis-badge lp-vis-badge-1">
+        <span class="lp-vis-badge-flag">🇦🇪</span>
+        <div>
+          <div class="lp-vis-badge-city">Dubai</div>
+          <div class="lp-vis-badge-price">from ₹12,499</div>
+        </div>
+      </div>
+      <div class="lp-vis-badge lp-vis-badge-2">
+        <span class="lp-vis-badge-flag">🇬🇧</span>
+        <div>
+          <div class="lp-vis-badge-city">London</div>
+          <div class="lp-vis-badge-price">from ₹42,999</div>
+        </div>
+      </div>
+      <div class="lp-vis-badge lp-vis-badge-3">
+        <span class="lp-vis-badge-flag">🇸🇬</span>
+        <div>
+          <div class="lp-vis-badge-city">Singapore</div>
+          <div class="lp-vis-badge-price">from ₹9,499</div>
+        </div>
+      </div>
+      <div class="lp-vis-badge lp-vis-badge-4">
+        <span class="lp-vis-badge-flag">🇺🇸</span>
+        <div>
+          <div class="lp-vis-badge-city">New York</div>
+          <div class="lp-vis-badge-price">from ₹54,999</div>
+        </div>
+      </div>
+      <div class="lp-vis-badge lp-vis-badge-5">
+        <span class="lp-vis-badge-flag">🇹🇭</span>
+        <div>
+          <div class="lp-vis-badge-city">Bangkok</div>
+          <div class="lp-vis-badge-price">from ₹8,999</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
+
+<!-- ========== TICKER ========== -->
+<div class="lp-ticker">
+  <div class="lp-ticker-track">
+    <span><i class="fa-solid fa-tag"></i> SALE: Delhi to Dubai from ₹12,499</span>
+    <span><i class="fa-solid fa-plane-departure"></i> New route: Mumbai → London Heathrow — now direct!</span>
+    <span><i class="fa-solid fa-tag"></i> Bangkok from ₹8,999 · Singapore from ₹9,499</span>
+    <span><i class="fa-solid fa-star"></i> Earn 2× BharatMiles on all international flights</span>
+    <span><i class="fa-solid fa-gem"></i> Business Class to Toronto from ₹89,999</span>
+    <span><i class="fa-solid fa-plane"></i> New route: Delhi → Paris CDG — 3 flights weekly</span>
+    <span><i class="fa-solid fa-tag"></i> Kuala Lumpur from ₹7,299 · Sydney from ₹34,999</span>
+    <span><i class="fa-solid fa-plane-departure"></i> Frankfurt · Amsterdam · Zurich — expanding routes!</span>
+    <span><i class="fa-solid fa-tag"></i> SALE: Delhi to Dubai from ₹12,499</span>
+    <span><i class="fa-solid fa-plane-departure"></i> New route: Mumbai → London Heathrow — now direct!</span>
+    <span><i class="fa-solid fa-tag"></i> Bangkok from ₹8,999 · Singapore from ₹9,499</span>
+    <span><i class="fa-solid fa-star"></i> Earn 2× BharatMiles on all international flights</span>
+    <span><i class="fa-solid fa-gem"></i> Business Class to Toronto from ₹89,999</span>
+    <span><i class="fa-solid fa-plane"></i> New route: Delhi → Paris CDG — 3 flights weekly</span>
+    <span><i class="fa-solid fa-tag"></i> Kuala Lumpur from ₹7,299 · Sydney from ₹34,999</span>
+    <span><i class="fa-solid fa-plane-departure"></i> Frankfurt · Amsterdam · Zurich — expanding routes!</span>
+  </div>
+</div>
+
+<!-- ========== INTERNATIONAL DESTINATIONS ========== -->
 
 <!-- ========== STATS ========== -->
 <section class="lp-stats">
@@ -85,7 +212,7 @@
 </section>
 
 <!-- ========== ABOUT BHARAT AIRLINES ========== -->
-<section class="lp-about">
+<section id="about" class="lp-about">
   <div class="lp-container">
     <div class="lp-section-header">
       <span class="lp-section-eyebrow"><i class="fa-solid fa-plane-circle-check"></i> About Us</span>
@@ -368,7 +495,7 @@
       </div>
 
       <!-- Contact -->
-      <div class="lp-footer-col">
+      <div id="contact" class="lp-footer-col">
         <h4>CONTACT</h4>
         <ul class="lp-footer-contact">
           <li>
