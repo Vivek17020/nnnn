@@ -9,95 +9,94 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./assign-pilot.component.scss']
 })
 export class AssignPilotComponent implements OnInit {
+
   assignForm!: FormGroup;
   flights: any[] = [];
   pilots: any[] = [];
   schedules: any[] = [];
-  roleName: string | null = null;
+  roleName = '';
   showMessage = false;
   showError = false;
+  responseMessage = '';
   errorMessage = '';
+  isSubmitting = false;
+  updatingScheduleId: number | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private httpService: HttpService,
-    public authService: AuthService
-  ) {}
+  constructor(private fb: FormBuilder, private httpService: HttpService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.roleName = this.authService.getRole;
+
     this.assignForm = this.fb.group({
-      flightId: [null, Validators.required],
-      pilotId: [null, Validators.required],
-      scheduledDate: ['', Validators.required],
-      assignStatus: ['ASSIGNED', Validators.required]
+      flightId: ['', Validators.required],
+      pilotId: ['', Validators.required],
+      scheduledDate: ['', Validators.required]
     });
-    this.loadData();
-  }
 
-  loadData(): void {
-    this.httpService.getAllFlights().subscribe((flights) => {
-      this.flights = flights || [];
-    });
-    this.httpService.getPilots().subscribe((users) => {
-      this.pilots = users || [];
-    });
-    if (this.roleName === 'PILOT') {
-      this.httpService.getAssignPilotDetails().subscribe((schedules) => {
-        this.schedules = schedules || [];
-      });
-    } else {
-      this.httpService.getAllSchedules().subscribe((schedules) => {
-        this.schedules = schedules || [];
-      });
+    this.httpService.getAllFlights().subscribe({ next: (data) => this.flights = data });
+    if (this.roleName === 'ADMIN') {
+      this.httpService.getPilots().subscribe({ next: (data) => this.pilots = data });
     }
+    this.refreshSchedules();
   }
 
-  onFlightChange(): void {
-    const flightId = this.assignForm.get('flightId')?.value;
-    const selected = this.flights.find((flight) => flight.id === flightId);
-    if (selected?.departureDate) {
-      this.assignForm.patchValue({ scheduledDate: selected.departureDate });
+  refreshSchedules(): void {
+    if (this.roleName === 'ADMIN') {
+      this.httpService.getAllSchedules().subscribe({ next: (data) => this.schedules = data });
+    } else {
+      this.httpService.getMySchedule().subscribe({ next: (data) => this.schedules = data });
     }
   }
 
   onSubmit(): void {
-    this.showMessage = false;
-    this.showError = false;
+    if (this.assignForm.invalid || this.isSubmitting) return;
 
-    if (this.assignForm.invalid) {
-      this.showError = true;
-      this.errorMessage = 'Please fill all required assignment fields.';
-      return;
-    }
-
-    const { flightId, pilotId, scheduledDate, assignStatus } = this.assignForm.value;
-    this.httpService.assignPilot(flightId, pilotId, scheduledDate, assignStatus).subscribe({
+    this.isSubmitting = true;
+    const { flightId, pilotId, scheduledDate } = this.assignForm.value;
+    this.httpService.assignPilot(flightId, pilotId, scheduledDate, 'AWAITING_PILOT_ACCEPTANCE').subscribe({
       next: () => {
+        this.isSubmitting = false;
         this.showMessage = true;
-        this.assignForm.reset({ assignStatus: 'ASSIGNED' });
-        this.loadData();
+        this.showError = false;
+        this.responseMessage = 'Pilot assigned. Awaiting pilot acceptance.';
+        this.assignForm.reset();
+        this.refreshSchedules();
       },
-      error: (error) => {
+      error: (err) => {
+        this.isSubmitting = false;
         this.showError = true;
-        this.errorMessage = error?.error?.message || 'Failed to assign pilot.';
+        this.errorMessage = err?.error?.message || 'Assignment failed.';
       }
     });
   }
 
   updateStatus(id: number, status: string): void {
-    this.showMessage = false;
-    this.showError = false;
+    if (this.updatingScheduleId !== null) return;
+    this.updatingScheduleId = id;
 
     this.httpService.updateScheduleStatus(id, status).subscribe({
       next: () => {
+        this.updatingScheduleId = null;
         this.showMessage = true;
-        this.loadData();
+        this.showError = false;
+        this.responseMessage = status === 'REJECTED'
+          ? 'Flight rejected. Admin has been notified via schedule status.'
+          : `Schedule updated to ${status}.`;
+        this.refreshSchedules();
       },
-      error: (error) => {
+      error: (err) => {
+        this.updatingScheduleId = null;
         this.showError = true;
-        this.errorMessage = error?.error?.message || 'Unable to update schedule status.';
+        this.errorMessage = err?.error?.message || 'Failed to update status.';
       }
     });
+  }
+
+  isRejected(schedule: any): boolean {
+    return schedule?.status === 'PILOT_REJECTED' || schedule?.assignStatus === 'REJECTED';
+  }
+
+  isAwaitingAcceptance(schedule: any): boolean {
+    return schedule?.status === 'AWAITING_PILOT_ACCEPTANCE' || schedule?.assignStatus === 'AWAITING_PILOT_ACCEPTANCE';
   }
 }

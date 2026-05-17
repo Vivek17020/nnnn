@@ -1,39 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Bharat Airlines — global design tokens */
+:root {
+  --ai-primary: #1a3a6b;
+  --ai-primary-dark: #0f2447;
+  --ai-primary-light: #e8eef7;
+  --ai-accent: #c9a227;
+  --ai-success: #198754;
+  --ai-danger: #dc3545;
+  --ai-warning: #ffc107;
+  --ai-bg: #f4f6f9;
+  --ai-surface: #ffffff;
+  --ai-surface-warm: #faf8f5;
+  --ai-text: #1a1a2e;
+  --ai-text-secondary: #4a5568;
+  --ai-text-muted: #718096;
+  --ai-border: #dde3ec;
+  --ai-border-light: #edf0f5;
+  --ai-shadow: 0 2px 8px rgba(26, 58, 107, 0.08);
+  --ai-shadow-lg: 0 8px 24px rgba(26, 58, 107, 0.12);
+  --ai-r: 10px;
+  --ai-r-sm: 6px;
+}
 
-*{
-  font-family: 'Poppins', sans-serif;
+* {
   box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  background:#f7f1eb;
-  color:#2b2b2b;
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--ai-bg);
+  color: var(--ai-text);
+  margin: 0;
+  min-height: 100vh;
 }
 
-.glass-card{
-  background: rgba(255,255,255,0.92);
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-  border: 1px solid rgba(255,255,255,0.4);
+.btn:disabled,
+.btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
-.primary-btn{
-  background: linear-gradient(135deg,#b11f2a,#d64b55);
-  border:none;
-  color:white;
-  border-radius:14px;
-  padding:12px 20px;
-  font-weight:600;
-  transition:0.3s;
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
 }
 
-.primary-btn:hover{
-  transform: translateY(-2px);
+.dropdown-menu.position-absolute {
+  z-index: 1050;
 }
 
-.section-title{
-  font-size:2rem;
-  font-weight:700;
-  color:#7c121a;
+.modal.d-block {
+  z-index: 1060;
+}
+
+.table-empty {
+  text-align: center;
+  color: var(--ai-text-muted);
+  padding: 2rem;
 }

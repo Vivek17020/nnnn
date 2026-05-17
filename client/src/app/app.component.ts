@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +8,24 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Airline Booking System';
 
   constructor(public authService: AuthService, private router: Router) {}
+
+  get role(): string {
+    return this.authService.getRole;
+  }
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  get role(): string | null {
-    return this.authService.getRole;
+  // BUG FIX: Added so navbar can show logged-in user's name
+  get username(): string {
+    return this.authService.getUsername();
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
-    window.location.reload();
   }
 }
-

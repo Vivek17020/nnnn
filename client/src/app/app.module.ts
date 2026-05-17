@@ -19,28 +19,19 @@ import { SeatSelectionComponent } from './component/seat/seat.component';
 
 import { HttpService } from '../services/http.service';
 import { AuthService } from '../services/auth.service';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    FlightComponent,
-    FlightSearchComponent,
-    BookingsComponent,
-    AssignPilotComponent,
-    ProfilComponent,
-    ViewuserComponent,
-    SeatSelectionComponent
+    AppComponent, LoginComponent, RegisterComponent, ForgotPasswordComponent,
+    ResetPasswordComponent ,DashboardComponent, FlightComponent, FlightSearchComponent,
+    BookingsComponent, AssignPilotComponent, ProfilComponent,
+    ViewuserComponent, SeatSelectionComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule
+    BrowserModule, AppRoutingModule, FormsModule,
+    ReactiveFormsModule, HttpClientModule, CommonModule
   ],
   providers: [HttpService, AuthService],
   bootstrap: [AppComponent]

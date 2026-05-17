@@ -18,8 +18,10 @@ export interface Bookings {
   flight?: Flights;
   bookingDate?: string;
   seatNumbers?: string;
-  paymentStatus?: PaymentStatus | string;
+  paymentStatus?: PaymentStatus;
   pnr?: string;
-  status?: BookingStatus | string;
+  status?: string;
 }
+
 export { User };
+

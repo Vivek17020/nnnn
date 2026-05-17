@@ -1,12 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Seat } from '../../model/seat';
 import { SeatService } from '../../services/seat.service';
 
@@ -15,99 +8,83 @@ import { SeatService } from '../../services/seat.service';
   templateUrl: './seat.component.html',
   styleUrls: ['./seat.component.scss']
 })
-export class SeatSelectionComponent implements OnChanges, OnInit {
+export class SeatSelectionComponent implements OnInit, OnChanges {
 
-  @Input() flightId?: number;
+  @Input() flightId!: number;
   @Input() seats: Seat[] = [];
+  @Input() maxSelectable: number = 1;
+  @Input() selectedSeats: string[] = [];
   @Output() seatSelected = new EventEmitter<string>();
 
-  seatMap: Seat[][] = [];
-  selectedSeatNumber: string | null = null;
-  loading = false;
-  error = false;
+  seatMap: any[][] = [];
+
+  hasEmergencySeats = false;
+  hasXLSeats = false;
 
   constructor(private seatService: SeatService) {}
 
-  // ✅ FIX 1: ADD THIS
   ngOnInit(): void {
-    if (this.flightId) {
-      this.loadSeats();
+    if (this.flightId && (!this.seats || this.seats.length === 0)) {
+      this.seatService.getSeats(this.flightId).subscribe({
+        next: (data) => { this.buildSeatMap(data); }
+      });
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['flightId'] && this.flightId) {
-      this.loadSeats();
-    }
-    if (changes['seats'] && this.seats) {
-      this.buildSeatMap();
+    if (changes['seats'] && changes['seats'].currentValue) {
+      this.buildSeatMap(changes['seats'].currentValue);
     }
   }
 
-  loadSeats(): void {
-    this.loading = true;
-    this.error = false;
+  buildSeatMap(seats: any[]): void {
+    const rowMap: { [key: string]: any[] } = {};
+    const rowOrder: string[] = [];
 
-    if (!this.flightId) {
-      this.seats = [];
-      this.loading = false;
-      return;
-    }
+    this.hasEmergencySeats = false;
+    this.hasXLSeats = false;
 
-    this.seatService.getSeats(this.flightId).subscribe({
-      next: (data: Seat[]) => {
-        this.seats = data || [];
-        this.buildSeatMap();
-        this.loading = false;
-      },
-      error: () => {
-        this.error = true;
-        this.loading = false;
+    for (const seat of seats) {
+      const normalisedSeat = {
+        ...seat,
+        seatNumber: (seat.seatNumber || '').trim().toUpperCase(),
+        rowLabel: (seat.rowLabel || '').trim().toUpperCase(),
+        booked: !seat.isAvailable
+      };
+      const row = normalisedSeat.rowLabel;
+      if (!rowMap[row]) {
+        rowMap[row] = [];
+        rowOrder.push(row);
       }
-    });
+      rowMap[row].push(normalisedSeat);
+
+      if (normalisedSeat.isEmergencyExist) this.hasEmergencySeats = true;
+      if (normalisedSeat.isXL) this.hasXLSeats = true;
+    }
+
+    rowOrder.sort();
+    this.seatMap = rowOrder.map(row =>
+      rowMap[row].sort((a, b) => a.columnNumber - b.columnNumber)
+    );
   }
 
-  buildSeatMap(): void {
-    const rows: { [row: string]: Seat[] } = {};
-
-    this.seats.forEach((seat) => {
-      const row = seat.rowLabel || 'Unknown';
-
-      if (!rows[row]) {
-        rows[row] = [];
-      }
-
-      rows[row].push(seat);
-    });
-
-    this.seatMap = Object.keys(rows)
-      .sort()
-      .map((row) =>
-        rows[row].sort((a, b) => (a.columnNumber || 0) - (b.columnNumber || 0))
-      );
+  isSelected(seatNumber: string): boolean {
+    return this.selectedSeats.includes(seatNumber.toUpperCase());
   }
 
- selectSeat(seat: any): void {
-
-  const isBooked = seat.booked ?? false;
-  const isAvailable = seat.isAvailable ?? !isBooked;
-  const isBlocked = seat.isBlocked ?? false;
-
- 
-  if (isBooked || !isAvailable || isBlocked) {
-    this.selectedSeatNumber = null;
-    return;
+  getSeatTooltip(seat: any): string {
+    if (seat.booked) return `${seat.seatNumber} — Booked`;
+    if (seat.isBlocked) return `${seat.seatNumber} — Blocked (not available)`;
+    const features: string[] = [];
+    if (seat.isEmergencyExist) features.push('Emergency Exit Row');
+    if (seat.isXL) features.push('Extra Legroom');
+    const price = seat.price > 0 ? `₹${seat.price}` : '';
+    const featureStr = features.length ? ` (${features.join(', ')})` : '';
+    return `${seat.seatNumber}${featureStr}${price ? ' — ' + price : ''}`;
   }
 
-  
-  this.selectedSeatNumber = seat.seatNumber;
-
-  if (this.selectedSeatNumber) {
-    this.seatSelected.emit(this.selectedSeatNumber);
-  }
-}
-
-  isSelected(seat: Seat): boolean {
-    return seat.seatNumber === this.selectedSeatNumber;
+  selectSeat(seat: any): void {
+    if (seat.booked || seat.isBlocked) return;
+    this.seatSelected.emit(seat.seatNumber.toUpperCase());
   }
 }
